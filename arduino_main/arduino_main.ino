@@ -11,10 +11,14 @@ void setup()
 
 void loop()
 {
+  Serial.print("HIGH: ");
+  Serial.println(HIGH); // Displays 1.
+  Serial.print("LOW: ");
+  Serial.println(LOW); // Displays 0.
   int aSignal = analogRead(analogInput);
   int dSignal = digitalRead(digitalInput);
   Serial.println(aSignal);
-  //Serial.println(dSignal);
+  Serial.println(dSignal);
   if(aSignal>700) // || dSignal==LOW
   {
     Serial.println("Light is detected.");
