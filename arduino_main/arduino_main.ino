@@ -22,12 +22,12 @@ void loop()
   if(aSignal>700) // || dSignal==LOW
   {
     Serial.println("Light is detected.");
-    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED_BUILTIN, LOW); // LED state is inverted.
   }
   else
   {
     Serial.println("Light is not detected.");
-    digitalWrite(LED_BUILTIN, LOW);
+    digitalWrite(LED_BUILTIN, HIGH); // LED state is inverted.
   }
-  delay(1500);
+  delay(1000);
 }
