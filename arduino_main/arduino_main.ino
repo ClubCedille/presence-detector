@@ -1,5 +1,5 @@
-int analogInput = A0;
-int digitalInput = D5;
+static int analogInput = A0;
+static int digitalInput = D5;
 
 void setup()
 {
@@ -17,7 +17,7 @@ void loop()
   Serial.println(aSignal);
   Serial.print("Digital signal: ");
   Serial.println(dSignal);
-  if(aSignal>700) // || dSignal==HIGH
+  if(lightIsDetected())
   {
     Serial.println("Light is detected.");
     digitalWrite(LED_BUILTIN, LOW); // LED state is inverted.
@@ -28,4 +28,10 @@ void loop()
     digitalWrite(LED_BUILTIN, HIGH); // LED state is inverted.
   }
   delay(1000);
+}
+
+static bool lightIsDetected()
+{
+  return analogRead(analogInput)>700;
+  //return digitalRead(digitalInput)==HIGH;
 }
