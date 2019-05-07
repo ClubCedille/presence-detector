@@ -25,9 +25,19 @@ http://arduino.esp8266.com/stable/package_esp8266com_index.json
 
 4. Click OK. The settings window will close.
 5. Under __Tools > Board > Boards Manager...__, install the _esp8266 by ESP8266 Community_ package.  
-6. Get back to  __Tools > Board__, you should see 2 options starting with NodeMCU. One of these should work.
+6. Under the __Tools__ section, set the following properties:
+  
+Board : "NodeMCU 1.0(ESP-12E Module)"
+
+Upload Speed : "11200"
+
+CpuFrequency : "80 MHz"
+
+Debug Port : Serial
 
 
+__Linux__
 
+Port : /dev/ttyUSB0
 
-
+7. To use the monitor, hit __Ctrl__ + __Shift__ + __M__ and set it to 9600 baud.
