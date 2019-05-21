@@ -1,37 +1,32 @@
-static int analogInput = A0;
-static int digitalInput = D5;
+static const int DIGITAL_INPUT = D1;
 
-void setup()
+static int getDigitalSignal()
 {
-  // Is on when light is detected.
-  pinMode(digitalInput, INPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
-  Serial.begin(9600); // For printing in the console
-}
-
-void loop()
-{
-  int aSignal = analogRead(analogInput);
-  int dSignal = digitalRead(digitalInput);
-  Serial.print("Analog signal: ");
-  Serial.println(aSignal);
-  Serial.print("Digital signal: ");
-  Serial.println(dSignal);
-  if(lightIsDetected())
-  {
-    Serial.println("Light is detected.");
-    digitalWrite(LED_BUILTIN, LOW); // LED state is inverted.
-  }
-  else
-  {
-    Serial.println("Light is not detected.");
-    digitalWrite(LED_BUILTIN, HIGH); // LED state is inverted.
-  }
-  delay(1000);
+  return digitalRead(DIGITAL_INPUT);
 }
 
 static bool lightIsDetected()
 {
-  return analogRead(analogInput)>700;
-  //return digitalRead(digitalInput)==HIGH;
+  return getDigitalSignal() == HIGH;
+}
+
+void setup()
+{
+  // The input pin is on when light is detected.
+  // Connect a 56 kiloohm pull-down resistor to the digital input pin.
+  pinMode(DIGITAL_INPUT, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop()
+{
+  if (lightIsDetected())
+  {
+    digitalWrite(LED_BUILTIN, LOW); // LED state is inverted.
+  }
+  else
+  {
+    digitalWrite(LED_BUILTIN, HIGH); // LED state is inverted.
+  }
+  delay(1000);
 }
