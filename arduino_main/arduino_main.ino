@@ -2,19 +2,15 @@
 #include <ESP8266HTTPClient.h>
 
 /*
- * File wifiConnection.h contains the ssid and password required to
+ * File confidential.h contains the ssid and password required to
  * connect to a wifi network. They are kept seperate from the source
  * code as they must stay confidential. DO NOT PUSH THEM TO GITHUB.
  */
 #include "confidential.h"
 
 #define LIGHT_SIGNAL_INPUT 5 // pin D1
-#define HOST "aquinas.xyz"
-#define HTTPS_PORT 443
-#define PATH "/club/api.php"
 
 int previousSignal = -1;
-
 HTTPClient client;
 
 void connectToWifi(char* ssid, char* password)
