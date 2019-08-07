@@ -21,6 +21,7 @@ void connectToWifi(char* ssid, char* password)
   while(WiFi.status() != WL_CONNECTED)
   {
     delay(1000);
+    i++;
     if(i>=60) // Fails after one minute.
     {
       return;
@@ -40,7 +41,6 @@ void sendLightStatus(int status)
   client.begin(path + status);
   client.addHeader("Content-Type", "text/plain");
   client.POST("POST request from light detector");
-  client.getString();
   client.end();
 }
 
