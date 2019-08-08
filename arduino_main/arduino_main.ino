@@ -4,7 +4,7 @@
 /*
  * File confidential.h contains the ssid and password required to
  * connect to a wifi network. They are kept seperate from the source
- * code as they must stay confidential. DO NOT PUSH THEM TO GITHUB.
+ * code as they must stay private. DO NOT PUSH THEM TO GITHUB.
  */
 #include "confidential.h"
 
@@ -22,10 +22,21 @@ void connectToWifi(char* ssid, char* password)
   {
     delay(1000);
     i++;
-    if(i>=60) // Fails after one minute.
+    if(i>=30) // Fails after thirty seconds.
     {
       return;
     }
+  }
+}
+
+void flashForError()
+{
+  for(int i=0; i<19; i++)
+  {
+    digitalWrite(LED_BUILTIN, LOW); // LED is on.
+    delay(100);
+    digitalWrite(LED_BUILTIN, HIGH); // LED is off.
+    delay(100);
   }
 }
 
@@ -57,10 +68,13 @@ void setup()
 void loop()
 {
   int lightStatus = getLightStatus();
-  digitalWrite(LED_BUILTIN, invertDigitalState(lightStatus)); // LED state is inverted.
-  // The connection is established, and the light status has changed.
-  if(lightStatus!=previousLightStatus && isConnectedToWiFi())
+  if(!isConnectedToWiFi())
   {
+    flashForError();
+  }
+  else if(lightStatus!=previousLightStatus)
+  {
+    digitalWrite(LED_BUILTIN, invertDigitalState(lightStatus)); // LED state is inverted.
     sendLightStatus(lightStatus);
     previousLightStatus = lightStatus;
   }
