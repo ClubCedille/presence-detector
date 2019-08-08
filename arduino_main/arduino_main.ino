@@ -10,15 +10,15 @@
 
 #define LIGHT_SIGNAL_INPUT 5 // pin D1
 
-int previousSignal = -1;
+int previousLightStatus = -1;
 HTTPClient client;
 
 void connectToWifi(char* ssid, char* password)
 {
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-  int i=0;
-  while(WiFi.status() != WL_CONNECTED)
+  int i = 0;
+  while(!isConnectedToWiFi())
   {
     delay(1000);
     i++;
@@ -33,7 +33,9 @@ int getLightStatus() {return digitalRead(LIGHT_SIGNAL_INPUT);}
 
 int invertDigitalState(int state) {return state==HIGH? LOW: HIGH;}
 
-bool lightIsDetected() {return getLightStatus() == HIGH;}
+bool isConnectedToWiFi() {return WiFi.status()==WL_CONNECTED;}
+
+bool lightIsDetected() {return getLightStatus()==HIGH;}
 
 void sendLightStatus(int status)
 {
@@ -54,13 +56,13 @@ void setup()
 
 void loop()
 {
-  int signal = getLightStatus();
-  digitalWrite(LED_BUILTIN, invertDigitalState(signal)); // LED state is inverted.
+  int lightStatus = getLightStatus();
+  digitalWrite(LED_BUILTIN, invertDigitalState(lightStatus)); // LED state is inverted.
   // The connection is established, and the light status has changed.
-  if(signal != previousSignal && WiFi.status() == WL_CONNECTED)
+  if(lightStatus!=previousLightStatus && isConnectedToWiFi())
   {
-    sendLightStatus(signal);
-    previousSignal = signal;
+    sendLightStatus(lightStatus);
+    previousLightStatus = lightStatus;
   }
   delay(500);
 }
